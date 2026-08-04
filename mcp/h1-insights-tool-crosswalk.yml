@@ -1,0 +1,813 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/h1-insights-openapi-original.json
+status: unconfirmed
+note: 'H1''s only MCP endpoint (https://ribbon.readme.io/mcp, ReadMe-provisioned on the docs host) returns 401 Authorization
+  required for tools/list, so its real tool names and inputSchemas could not be observed. This crosswalk is therefore
+  a DERIVED candidate mapping from the published OpenAPI 3.1.0 to one tool per operation, not a record of tools
+  H1 publishes. Every row carries confidence: low for exactly that reason: the tool names are our snake_case rendering
+  of the operationId, not names observed on the wire. The value of the file is the other direction — each candidate
+  tool inherits a REAL input contract (parameters + requestBody) from its backing operation in the spec.'
+surfaces:
+  openapi:
+    file: openapi/h1-insights-openapi-original.json
+    servers:
+    - https://api.ribbonhealth.com/v1
+    operations: 75
+    gated: false
+    harvested_from: https://dash.readme.com/api/v1/api-registry/hmjy16mehhk4kq
+  graphql:
+    endpoint: null
+    present: false
+    note: No GraphQL surface. No /graphql path on any probed host.
+  mcp:
+    url: https://ribbon.readme.io/mcp
+    gated: true
+    tools_list_http_status: 401
+    note: Docs-fronting MCP server provisioned by ReadMe; auth required for tools/list.
+crosswalk:
+- tool: get_custom_providers
+  category: Providers
+  rest:
+  - getCustomProviders
+  method: GET
+  path: /custom/providers
+  binding: rest
+  confidence: low
+  summary: Search Providers
+- tool: get_custom_provider
+  category: Providers
+  rest:
+  - getCustomProvider
+  method: GET
+  path: /custom/providers/{npi}
+  binding: rest
+  confidence: low
+  summary: Get Provider
+- tool: put_custom_provider
+  category: Providers
+  rest:
+  - putCustomProvider
+  method: PUT
+  path: /custom/providers/{npi}
+  binding: rest
+  confidence: low
+  summary: Modify Provider Fields
+- tool: put_custom_provider_locations
+  category: Providers
+  rest:
+  - putCustomProviderLocations
+  method: PUT
+  path: /custom/providers/{npi}/locations
+  binding: rest
+  confidence: low
+  summary: Add Or Remove Provider Locations
+- tool: put_custom_provider_location
+  category: Providers
+  rest:
+  - putCustomProviderLocation
+  method: PUT
+  path: /custom/providers/{npi}/locations/{location_uuid}
+  binding: rest
+  confidence: low
+  summary: Modify Provider Location Fields
+- tool: put_custom_provider_specialties
+  category: Providers
+  rest:
+  - putCustomProviderSpecialties
+  method: PUT
+  path: /custom/providers/{npi}/specialties
+  binding: rest
+  confidence: low
+  summary: Add Or Remove Provider Specialties
+- tool: put_custom_provider_primary_specialties
+  category: Providers
+  rest:
+  - putCustomProviderPrimarySpecialties
+  method: PUT
+  path: /custom/providers/{npi}/specialties/{specialty_uuid}
+  binding: rest
+  confidence: low
+  summary: Modify A Provider's Primary Specialties
+- tool: put_custom_provider_procedures
+  category: Providers
+  rest:
+  - putCustomProviderProcedures
+  method: PUT
+  path: /custom/providers/{npi}/procedures
+  binding: rest
+  confidence: low
+  summary: Add Or Remove Provider Procedures
+- tool: put_custom_provider_clinical_areas
+  category: Providers
+  rest:
+  - putCustomProviderClinicalAreas
+  method: PUT
+  path: /custom/providers/{npi}/clinical_areas
+  binding: rest
+  confidence: low
+  summary: Add Or Remove Provider Clinical Areas
+- tool: put_custom_provider_location_insurances
+  category: Providers
+  rest:
+  - putCustomProviderLocationInsurances
+  method: PUT
+  path: /custom/providers/{npi}/locations/{location_uuid}/insurances
+  binding: rest
+  confidence: low
+  summary: Add Or Remove Provider Insurances At A Location
+- tool: put_custom_provider_location_organizations
+  category: Providers
+  rest:
+  - putCustomProviderLocationOrganizations
+  method: PUT
+  path: /custom/providers/{npi}/locations/{location_uuid}/organizations
+  binding: rest
+  confidence: low
+  summary: Add Or Remove Provider Organizations At A Location
+- tool: get_custom_provider_filters
+  category: Filters
+  rest:
+  - getCustomProviderFilters
+  method: GET
+  path: /custom/providers/filters
+  binding: rest
+  confidence: low
+  summary: Get Provider Filters
+- tool: create_custom_provider_filter
+  category: Filters
+  rest:
+  - createCustomProviderFilter
+  method: POST
+  path: /custom/providers/filters
+  binding: rest
+  confidence: low
+  summary: Create Provider Filter
+- tool: edit_custom_provider_filter
+  category: Filters
+  rest:
+  - editCustomProviderFilter
+  method: PUT
+  path: /custom/providers/filters/{filter_uuid}
+  binding: rest
+  confidence: low
+  summary: Edit Provider Filter
+- tool: delete_custom_provider_filter
+  category: Filters
+  rest:
+  - deleteCustomProviderFilter
+  method: DELETE
+  path: /custom/providers/filters/{filter_uuid}
+  binding: rest
+  confidence: low
+  summary: Delete Provider Filter
+- tool: get_custom_locations
+  category: Locations
+  rest:
+  - getCustomLocations
+  method: GET
+  path: /custom/locations
+  binding: rest
+  confidence: low
+  summary: Search Locations
+- tool: post_custom_locations
+  category: Locations
+  rest:
+  - postCustomLocations
+  method: POST
+  path: /custom/locations
+  binding: rest
+  confidence: low
+  summary: Create Location
+- tool: get_custom_location
+  category: Locations
+  rest:
+  - getCustomLocation
+  method: GET
+  path: /custom/locations/{location_uuid}
+  binding: rest
+  confidence: low
+  summary: Get Location
+- tool: put_custom_location
+  category: Locations
+  rest:
+  - putCustomLocation
+  method: PUT
+  path: /custom/locations/{location_uuid}
+  binding: rest
+  confidence: low
+  summary: Add or Edit Location Fields
+- tool: delete_custom_location
+  category: Locations
+  rest:
+  - deleteCustomLocation
+  method: DELETE
+  path: /custom/locations/{location_uuid}
+  binding: rest
+  confidence: low
+  summary: Delete Location
+- tool: put_custom_location_insurances
+  category: Locations
+  rest:
+  - putCustomLocationInsurances
+  method: PUT
+  path: /custom/locations/{location_uuid}/insurances
+  binding: rest
+  confidence: low
+  summary: Add Or Remove Location Insurances
+- tool: put_custom_location_organizations
+  category: Locations
+  rest:
+  - putCustomLocationOrganizations
+  method: PUT
+  path: /custom/locations/{location_uuid}/organizations
+  binding: rest
+  confidence: low
+  summary: Add Or Remove Location Organizations
+- tool: put_custom_location_clinical_areas
+  category: Locations
+  rest:
+  - putCustomLocationClinicalAreas
+  method: PUT
+  path: /custom/locations/{location_uuid}/clinical_areas
+  binding: rest
+  confidence: low
+  summary: Add Or Remove Location Clinical Areas
+- tool: get_custom_location_filters
+  category: Filters
+  rest:
+  - getCustomLocationFilters
+  method: GET
+  path: /custom/locations/filters
+  binding: rest
+  confidence: low
+  summary: Get Location Filters
+- tool: create_custom_location_filter
+  category: Filters
+  rest:
+  - createCustomLocationFilter
+  method: POST
+  path: /custom/locations/filters
+  binding: rest
+  confidence: low
+  summary: Create Location Filter
+- tool: edit_custom_location_filter
+  category: Filters
+  rest:
+  - editCustomLocationFilter
+  method: PUT
+  path: /custom/locations/filters/{filter_uuid}
+  binding: rest
+  confidence: low
+  summary: Edit Location Filter
+- tool: delete_custom_location_filter
+  category: Filters
+  rest:
+  - deleteCustomLocationFilter
+  method: DELETE
+  path: /custom/locations/filters/{filter_uuid}
+  binding: rest
+  confidence: low
+  summary: Delete Location Filter
+- tool: get_insurances
+  category: Reference Endpoints
+  rest:
+  - getInsurances
+  method: GET
+  path: /custom/insurances
+  binding: rest
+  confidence: low
+  summary: Search Insurances
+- tool: post_custom_insurance
+  category: Reference Endpoints
+  rest:
+  - postCustomInsurance
+  method: POST
+  path: /custom/insurances
+  binding: rest
+  confidence: low
+  summary: Create Insurance
+- tool: get_custom_insurance
+  category: Reference Endpoints
+  rest:
+  - getCustomInsurance
+  method: GET
+  path: /custom/insurances/{insurance_uuid}
+  binding: rest
+  confidence: low
+  summary: Get Insurance
+- tool: put_custom_insurance
+  category: Reference Endpoints
+  rest:
+  - putCustomInsurance
+  method: PUT
+  path: /custom/insurances/{insurance_uuid}
+  binding: rest
+  confidence: low
+  summary: Edit Insurance Fields
+- tool: delete_custom_insurance
+  category: Reference Endpoints
+  rest:
+  - deleteCustomInsurance
+  method: DELETE
+  path: /custom/insurances/{insurance_uuid}
+  binding: rest
+  confidence: low
+  summary: Delete Insurance
+- tool: get_specialties
+  category: Reference Endpoints
+  rest:
+  - getSpecialties
+  method: GET
+  path: /custom/specialties
+  binding: rest
+  confidence: low
+  summary: Search Specialties
+- tool: post_custom_specialty
+  category: Reference Endpoints
+  rest:
+  - postCustomSpecialty
+  method: POST
+  path: /custom/specialties
+  binding: rest
+  confidence: low
+  summary: Create Specialty
+- tool: get_custom_specialty
+  category: Reference Endpoints
+  rest:
+  - getCustomSpecialty
+  method: GET
+  path: /custom/specialties/{specialty_uuid}
+  binding: rest
+  confidence: low
+  summary: Get Specialty
+- tool: put_custom_specialty
+  category: Reference Endpoints
+  rest:
+  - putCustomSpecialty
+  method: PUT
+  path: /custom/specialties/{specialty_uuid}
+  binding: rest
+  confidence: low
+  summary: Edit Specialty Fields
+- tool: delete_custom_specialty
+  category: Reference Endpoints
+  rest:
+  - deleteCustomSpecialty
+  method: DELETE
+  path: /custom/specialties/{specialty_uuid}
+  binding: rest
+  confidence: low
+  summary: Delete Specialty
+- tool: get_clinical_areas
+  category: Focus Area Endpoints
+  rest:
+  - getClinicalAreas
+  method: GET
+  path: /custom/clinical_areas
+  binding: rest
+  confidence: low
+  summary: Search Clinical Areas
+- tool: get_clinical_area
+  category: Focus Area Endpoints
+  rest:
+  - getClinicalArea
+  method: GET
+  path: /custom/clinical_areas/{clinical_area_uuid}
+  binding: rest
+  confidence: low
+  summary: Get Clinical Area
+- tool: get_conditions
+  category: Focus Area Endpoints
+  rest:
+  - getConditions
+  method: GET
+  path: /custom/conditions
+  binding: rest
+  confidence: low
+  summary: Search Conditions
+- tool: get_condition
+  category: Focus Area Endpoints
+  rest:
+  - getCondition
+  method: GET
+  path: /custom/conditions/{condition_uuid}
+  binding: rest
+  confidence: low
+  summary: Get Condition
+- tool: get_treatments
+  category: Focus Area Endpoints
+  rest:
+  - getTreatments
+  method: GET
+  path: /custom/treatments
+  binding: rest
+  confidence: low
+  summary: Search Treatments
+- tool: get_treatment
+  category: Focus Area Endpoints
+  rest:
+  - getTreatment
+  method: GET
+  path: /custom/treatments/{treatment_uuid}
+  binding: rest
+  confidence: low
+  summary: Get Treatment
+- tool: get_organizations
+  category: Organizations
+  rest:
+  - getOrganizations
+  method: GET
+  path: /custom/organizations
+  binding: rest
+  confidence: low
+  summary: Search Organizations
+- tool: get_organization
+  category: Organizations
+  rest:
+  - getOrganization
+  method: GET
+  path: /custom/organizations/{organization_uuid}
+  binding: rest
+  confidence: low
+  summary: Get Organization
+- tool: get_tins
+  category: TINs
+  rest:
+  - getTins
+  method: GET
+  path: /custom/tin
+  binding: rest
+  confidence: low
+  summary: Search TINs
+- tool: get_custom_tin
+  category: TINs
+  rest:
+  - getCustomTin
+  method: GET
+  path: /custom/tin/{tin_id}
+  binding: rest
+  confidence: low
+  summary: Get TIN
+- tool: get_custom_provider_types
+  category: Reference Endpoints
+  rest:
+  - getCustomProviderTypes
+  method: GET
+  path: /provider_types
+  binding: rest
+  confidence: low
+  summary: Search Provider Types
+- tool: post_custom_provider_type
+  category: Reference Endpoints
+  rest:
+  - postCustomProviderType
+  method: POST
+  path: /custom/provider_types
+  binding: rest
+  confidence: low
+  summary: Create Provider Type
+- tool: get_custom_provider_type
+  category: Reference Endpoints
+  rest:
+  - getCustomProviderType
+  method: GET
+  path: /custom/provider_types/{provider_type_uuid}
+  binding: rest
+  confidence: low
+  summary: Get Provider Type
+- tool: put_custom_provider_type
+  category: Reference Endpoints
+  rest:
+  - putCustomProviderType
+  method: PUT
+  path: /custom/provider_types/{provider_type_uuid}
+  binding: rest
+  confidence: low
+  summary: Edit Provider Type Fields
+- tool: delete_custom_provider_type
+  category: Reference Endpoints
+  rest:
+  - deleteCustomProviderType
+  method: DELETE
+  path: /custom/provider_types/{provider_type_uuid}
+  binding: rest
+  confidence: low
+  summary: Delete Provider Type
+- tool: get_custom_location_types
+  category: Reference Endpoints
+  rest:
+  - getCustomLocationTypes
+  method: GET
+  path: /location_types
+  binding: rest
+  confidence: low
+  summary: Search Location Types
+- tool: post_custom_location_type
+  category: Reference Endpoints
+  rest:
+  - postCustomLocationType
+  method: POST
+  path: /custom/location_types
+  binding: rest
+  confidence: low
+  summary: Create Location Type
+- tool: get_custom_location_type
+  category: Reference Endpoints
+  rest:
+  - getCustomLocationType
+  method: GET
+  path: /custom/location_types/{location_type_uuid}
+  binding: rest
+  confidence: low
+  summary: Get Location Type
+- tool: put_custom_location_type
+  category: Reference Endpoints
+  rest:
+  - putCustomLocationType
+  method: PUT
+  path: /custom/location_types/{location_type_uuid}
+  binding: rest
+  confidence: low
+  summary: Edit Location Type Fields
+- tool: delete_custom_location_type
+  category: Reference Endpoints
+  rest:
+  - deleteCustomLocationType
+  method: DELETE
+  path: /custom/location_types/{location_type_uuid}
+  binding: rest
+  confidence: low
+  summary: Delete Location Type
+- tool: get_custom_virtual_care_platforms
+  category: Virtual Care Platforms
+  rest:
+  - getCustomVirtualCarePlatforms
+  method: GET
+  path: /custom/virtual_care_platforms
+  binding: rest
+  confidence: low
+  summary: Search Virtual Care Platforms
+- tool: get_virtual_care_platform
+  category: Virtual Care Platforms
+  rest:
+  - getVirtualCarePlatform
+  method: GET
+  path: /custom/virtual_care_platforms/{virtual_care_platform_uuid}
+  binding: rest
+  confidence: low
+  summary: Get Virtual Care Platform
+- tool: get_procedures
+  category: Reference Endpoints
+  rest:
+  - getProcedures
+  method: GET
+  path: /procedures
+  binding: rest
+  confidence: low
+  summary: Search Procedures
+- tool: get_procedure
+  category: Reference Endpoints
+  rest:
+  - getProcedure
+  method: GET
+  path: /procedures/{procedure_uuid}
+  binding: rest
+  confidence: low
+  summary: Get Procedure
+- tool: get_languages
+  category: Reference Endpoints
+  rest:
+  - getLanguages
+  method: GET
+  path: /languages
+  binding: rest
+  confidence: low
+  summary: Search Languages
+- tool: get_pricing_providers
+  category: Price Transparency
+  rest:
+  - getPricingProviders
+  method: GET
+  path: /pricing/providers
+  binding: rest
+  confidence: low
+  summary: Provider Price Search
+- tool: get_pricing_provider_procedures
+  category: Price Transparency
+  rest:
+  - getPricingProviderProcedures
+  method: GET
+  path: /pricing/providers/{npi}/procedures
+  binding: rest
+  confidence: low
+  summary: Provider Procedures
+- tool: get_pricing_provider_procedure
+  category: Price Transparency
+  rest:
+  - getPricingProviderProcedure
+  method: GET
+  path: /pricing/providers/{npi}/procedures/{procedure_uuid}
+  binding: rest
+  confidence: low
+  summary: Provider Procedure Pricing
+- tool: get_pricing_provider_procedure_location
+  category: Price Transparency
+  rest:
+  - getPricingProviderProcedureLocation
+  method: GET
+  path: /pricing/providers/{npi}/procedures/{procedure_uuid}/locations/{location_uuid}
+  binding: rest
+  confidence: low
+  summary: Provider Location Procedure Pricing
+- tool: get_pricing_carriers
+  category: Price Transparency
+  rest:
+  - getPricingCarriers
+  method: GET
+  path: /pricing/carriers
+  binding: rest
+  confidence: low
+  summary: List Carriers
+- tool: get_pricing_carrier
+  category: Price Transparency
+  rest:
+  - getPricingCarrier
+  method: GET
+  path: /pricing/carrier/{carrier_uuid}
+  binding: rest
+  confidence: low
+  summary: Get Carrier
+- tool: get_pricing_carrier_names
+  category: Price Transparency
+  rest:
+  - getPricingCarrierNames
+  method: GET
+  path: /pricing/version
+  binding: rest
+  confidence: low
+  summary: Carrier Names
+  deprecated: true
+- tool: get_pricing_version_carrier
+  category: Price Transparency
+  rest:
+  - getPricingVersionCarrier
+  method: GET
+  path: /pricing/version/{carrier_name}
+  binding: rest
+  confidence: low
+  summary: Carrier Data Versions By Name
+  deprecated: true
+- tool: get_eligibility
+  category: Cost Estimates
+  rest:
+  - getEligibility
+  method: POST
+  path: /eligibility
+  binding: rest
+  confidence: low
+  summary: Check Member Eligibility
+- tool: get_eligibility_insurance_partners
+  category: Cost Estimates
+  rest:
+  - getEligibilityInsurancePartners
+  method: GET
+  path: /eligibility_insurance_partners
+  binding: rest
+  confidence: low
+  summary: Search Supported Eligibility Insurances
+- tool: get_eligibility_insurance_partner
+  category: Cost Estimates
+  rest:
+  - getEligibilityInsurancePartner
+  method: GET
+  path: /eligibility_insurance_partners/{insurance_partner}
+  binding: rest
+  confidence: low
+  summary: Get Eligibility Insurance
+- tool: get_procedure_cost_estimate
+  category: Cost Estimates
+  rest:
+  - getProcedureCostEstimate
+  method: GET
+  path: /procedure_cost_estimate
+  binding: rest
+  confidence: low
+  summary: Procedure Cost Estimate
+- tool: get_network_analysis
+  category: Networks
+  rest:
+  - getNetworkAnalysis
+  method: GET
+  path: /network_analysis
+  binding: rest
+  confidence: low
+  summary: Network Analysis Based on Geography
+mcp_only: []
+mcp_only_note: Unknown — the live tool list is auth-gated, so MCP-only tools cannot be identified.
+rest_only:
+- category: Cost Estimates
+  operations:
+  - getEligibility
+  - getEligibilityInsurancePartners
+  - getEligibilityInsurancePartner
+  - getProcedureCostEstimate
+- category: Filters
+  operations:
+  - getCustomProviderFilters
+  - createCustomProviderFilter
+  - editCustomProviderFilter
+  - deleteCustomProviderFilter
+  - getCustomLocationFilters
+  - createCustomLocationFilter
+  - editCustomLocationFilter
+  - deleteCustomLocationFilter
+- category: Focus Area Endpoints
+  operations:
+  - getClinicalAreas
+  - getClinicalArea
+  - getConditions
+  - getCondition
+  - getTreatments
+  - getTreatment
+- category: Locations
+  operations:
+  - getCustomLocations
+  - postCustomLocations
+  - getCustomLocation
+  - putCustomLocation
+  - deleteCustomLocation
+  - putCustomLocationInsurances
+  - putCustomLocationOrganizations
+  - putCustomLocationClinicalAreas
+- category: Networks
+  operations:
+  - getNetworkAnalysis
+- category: Organizations
+  operations:
+  - getOrganizations
+  - getOrganization
+- category: Price Transparency
+  operations:
+  - getPricingProviders
+  - getPricingProviderProcedures
+  - getPricingProviderProcedure
+  - getPricingProviderProcedureLocation
+  - getPricingCarriers
+  - getPricingCarrier
+  - getPricingCarrierNames
+  - getPricingVersionCarrier
+- category: Providers
+  operations:
+  - getCustomProviders
+  - getCustomProvider
+  - putCustomProvider
+  - putCustomProviderLocations
+  - putCustomProviderLocation
+  - putCustomProviderSpecialties
+  - putCustomProviderPrimarySpecialties
+  - putCustomProviderProcedures
+  - putCustomProviderClinicalAreas
+  - putCustomProviderLocationInsurances
+  - putCustomProviderLocationOrganizations
+- category: Reference Endpoints
+  operations:
+  - getInsurances
+  - postCustomInsurance
+  - getCustomInsurance
+  - putCustomInsurance
+  - deleteCustomInsurance
+  - getSpecialties
+  - postCustomSpecialty
+  - getCustomSpecialty
+  - putCustomSpecialty
+  - deleteCustomSpecialty
+  - getCustomProviderTypes
+  - postCustomProviderType
+  - getCustomProviderType
+  - putCustomProviderType
+  - deleteCustomProviderType
+  - getCustomLocationTypes
+  - postCustomLocationType
+  - getCustomLocationType
+  - putCustomLocationType
+  - deleteCustomLocationType
+  - getProcedures
+  - getProcedure
+  - getLanguages
+- category: TINs
+  operations:
+  - getTins
+  - getCustomTin
+- category: Virtual Care Platforms
+  operations:
+  - getCustomVirtualCarePlatforms
+  - getVirtualCarePlatform
+rest_only_note: Because no MCP tool could be confirmed, every REST operation is formally rest_only today. Grouped
+  by OpenAPI tag so the capability surface is legible.
+coverage:
+  rest_operations_total: 75
+  candidate_tools_derived: 75
+  tools_observed_on_the_wire: 0
+  tools_bound_to_a_confirmed_operation: 0
+  mcp_only: null

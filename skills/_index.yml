@@ -1,0 +1,81 @@
+generated: '2026-08-04'
+method: generated
+source: openapi/h1-insights-openapi-original.json + https://ribbon.readme.io/
+api: openapi/h1-insights-openapi-original.json
+base_url: https://api.ribbonhealth.com/v1
+note: >-
+  Packaged Agent Skills for the H1 Provider Data API. Every operationId referenced below was verified
+  present in the harvested OpenAPI 3.1.0 before the skill was written. H1 publishes no AGENTS.md or
+  provider-authored skill files; these are API Evangelist generated operating instructions grounded in the
+  real contract plus the conventions and error semantics captured in conventions/ and errors/.
+
+skills:
+- file: h1-insights-find-in-network-provider.md
+  name: Find an in-network provider
+  description: >-
+    Resolve insurance and specialty UUIDs, search the provider directory by geography, network, clinical
+    criteria and quality, respect the pagination coupling and confidence scores, then pull the full record.
+  api: openapi/h1-insights-openapi-original.json
+  operations: [getInsurances, getSpecialties, getCustomProviders, getCustomProvider]
+- file: h1-insights-price-a-procedure.md
+  name: Price a procedure for a member
+  description: >-
+    Turn a procedure name into a UUID, search insurer-negotiated rates across providers and sites of care,
+    check carrier data recency, and produce a cost estimate without confusing a negotiated rate with member
+    out-of-pocket cost.
+  api: openapi/h1-insights-openapi-original.json
+  operations:
+  - getProcedures
+  - getInsurances
+  - getPricingProviders
+  - getPricingProviderProcedures
+  - getPricingProviderProcedure
+  - getPricingProviderProcedureLocation
+  - getPricingCarriers
+  - getPricingCarrier
+  - getProcedureCostEstimate
+- file: h1-insights-check-member-eligibility.md
+  name: Check member eligibility and benefits
+  description: >-
+    Confirm the payer is a supported eligibility partner, run the real-time coverage check, and handle the
+    deductible/out-of-pocket/copay/coinsurance response as PHI.
+  api: openapi/h1-insights-openapi-original.json
+  operations: [getEligibilityInsurancePartners, getEligibilityInsurancePartner, getEligibility]
+- file: h1-insights-curate-custom-directory.md
+  name: Curate a custom provider directory
+  description: >-
+    Edit customer-scoped provider and location data, attach specialties and location-scoped insurances,
+    create locations safely against the 409 natural-key guard, and register custom or boost filters so new
+    fields become searchable.
+  api: openapi/h1-insights-openapi-original.json
+  operations:
+  - putCustomProvider
+  - putCustomProviderLocations
+  - putCustomProviderLocation
+  - putCustomProviderSpecialties
+  - putCustomProviderLocationInsurances
+  - postCustomLocations
+  - putCustomLocation
+  - getCustomProviderFilters
+  - createCustomProviderFilter
+  - editCustomProviderFilter
+  - deleteCustomProviderFilter
+  - getCustomProviders
+- file: h1-insights-analyze-network-coverage.md
+  name: Analyze network coverage and sites of care
+  description: >-
+    Work the location, organization, focus-area, virtual-care and network-analysis endpoints to map what
+    care exists in a geography, who operates it, and where the network is thin.
+  api: openapi/h1-insights-openapi-original.json
+  operations:
+  - getCustomLocationTypes
+  - getCustomLocations
+  - getCustomLocation
+  - getOrganizations
+  - getOrganization
+  - getClinicalAreas
+  - getConditions
+  - getTreatments
+  - getCustomVirtualCarePlatforms
+  - getNetworkAnalysis
+  - getLanguages

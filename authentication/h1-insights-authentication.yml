@@ -1,0 +1,71 @@
+generated: '2026-08-04'
+method: searched
+source: openapi/h1-insights-openapi-original.json
+docs: https://ribbon.readme.io/docs/authentication
+summary:
+  types:
+  - http
+  http_schemes:
+  - bearer
+  api_key_in: []
+  oauth2_flows: []
+  scopes: false
+  mtls: false
+  openid_connect: false
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  applied: global
+  sources:
+  - openapi/h1-insights-openapi-original.json
+  docs: https://ribbon.readme.io/docs/authentication
+  header: 'Authorization: Bearer {customer_token}'
+  quote: >-
+    "The H1 API uses an API Key to authenticate requests. Authentication is performed by passing the token
+    as an HTTP header in the Bearer Authentication scheme `Authorization: Bearer {customer_token}`."
+  credential_type: >-
+    A long-lived customer API key presented as a bearer token. Despite the http-bearer scheme this is an
+    API key, not an OAuth 2.0 access token — there is no authorization server, no token endpoint, no
+    refresh and no documented expiry.
+  rotation: not documented
+  key_prefix: not documented
+  test_vs_live: >-
+    No separate test/sandbox key or mode is published. Entitlement differences are expressed as account
+    "packages" (Base API Access, Upgraded API, Add-Ons) and a trial account tier, not as key modes.
+authorization_model:
+  style: account-package entitlement
+  scopes: false
+  note: >-
+    There is no scope, permission or consent surface. What an authenticated caller may do is determined by
+    the account's contracted package. Calls outside the package return 403 permission_denied with an
+    explanatory message (for example "Trial accounts do not have access to custom provider directories",
+    "This resource is managed by Ribbon and cannot be modified"). An agent cannot narrow its own
+    privileges on this API — the token is all-or-nothing within the account's entitlement.
+  add_on_gated_surfaces:
+  - Provider Cost / Quality
+  - Eligibility Check
+  - Price Transparency
+  upgraded_only_surfaces:
+  - Custom / Boost Filters
+  - Custom Fields / Data Editing
+  source: https://ribbon.readme.io/docs/ribbon-products
+unauthenticated_behaviour:
+  probed: '2026-08-04'
+  url: https://api.ribbonhealth.com/v1/
+  http_status: 401
+  body: >-
+    {"error": {"status": 401, "code": "not_authenticated", "message": "You did not provide an API Key.
+    If you need help, please feel free to contact us at team@ribbonhealth.com!"}}
+  note: The 401 response is not declared anywhere in the published OpenAPI.
+key_acquisition:
+  self_serve: false
+  url: https://h1.com/request-demo/
+  note: >-
+    Keys are issued through a sales/demo request, not a self-serve developer signup. The docs direct new
+    users to "sign up here" (the request-demo form) and to support@h1.co for package questions.
+discovery:
+  openid_configuration: 404
+  oauth_authorization_server: 404
+  oauth_protected_resource: 404
+  source: well-known/h1-insights-well-known.yml

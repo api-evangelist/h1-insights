@@ -1,0 +1,96 @@
+generated: '2026-08-04'
+method: searched
+source: https://ribbon.readme.io/
+derived_from: openapi/h1-insights-openapi-original.json
+
+versioning:
+  scheme: uri-path
+  current: v1
+  base_url: https://api.ribbonhealth.com/v1
+  docs_branch: '2.2'
+  docs: https://ribbon.readme.io/
+  note: >-
+    The API path version (v1) and the documentation branch version (2.2) are independent. Reference links
+    in H1's own docs carry the docs branch (/v2.2/reference/...), not the API version.
+  policy_published: false
+
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  mechanism: >-
+    Deprecation is signalled in the OpenAPI and in the endpoint description text ("This endpoint is
+    deprecated. Please use X instead"), with a named replacement operation. No RFC 8594 Sunset/Deprecation
+    response headers and no dated removal policy are published.
+  evidence: 'OpenAPI declares deprecated: true on 2 of 75 operations.'
+
+deprecated_operations:
+- operation: getPricingCarrierNames
+  path: GET /pricing/version
+  title: Carrier Names
+  replacement: getPricingCarriers
+  replacement_path: GET /pricing/carriers
+  source: openapi/h1-insights-openapi-original.json
+- operation: getPricingVersionCarrier
+  path: GET /pricing/version/{carrier_name}
+  title: Carrier Data Versions By Name
+  replacement: getPricingCarrier
+  replacement_path: GET /pricing/carrier/{carrier_uuid}
+  source: openapi/h1-insights-openapi-original.json
+
+status_page:
+  url: https://status.ribbonhealth.com/
+  provider: Atlassian Statuspage
+  http_status: 200
+  observed: '2026-08-04'
+  state_at_observation: All Systems Operational
+  components_monitored:
+  - Provider endpoints
+  - Provider search
+  - Location endpoints
+  - Location search
+  - Reference endpoints
+  - Specialties
+  - Insurances
+  - Clinical areas
+  - Conditions
+  - Treatments
+  - Eligibility checks (powered by pVerify)
+  - Procedure cost estimates
+  feeds:
+  - rss
+  - atom
+  subscriptions: [email, sms, slack]
+  note: >-
+    The status page is still branded and hosted on the ribbonhealth.com domain post-acquisition; there is
+    no status.h1.com or status.h1.co (both fail to resolve).
+
+sla:
+  url: null
+  uptime_target: null
+  published: false
+  note: >-
+    No uptime percentage or service-level agreement is published on the status page or in the public docs;
+    SLAs appear to be contractual. Performance guidance is published as latency advice instead.
+  latency_guidance: https://ribbon.readme.io/docs/latency
+
+changelog:
+  url: null
+  published: false
+  note: >-
+    No public dated changelog. Probed https://ribbon.readme.io/changelog and
+    https://ribbon.readme.io/docs/changelog (both 404) and the full llms.txt documentation index, which
+    lists no changelog or release-notes page. Individual doc pages carry an `updatedAt` timestamp in their
+    markdown frontmatter, which is the only public change signal.
+
+corporate_lifecycle:
+  note: >-
+    H1 acquired Ribbon Health (deal announced 2026-01 style reporting of January 2025; closed December
+    2024) and folded the platform in as "H1 for Health Plans and Digital Health". The API host
+    (api.ribbonhealth.com), docs host (ribbon.readme.io), status page (status.ribbonhealth.com) and the
+    OpenAPI info.title ("Ribbon Health API") all still carry the acquired brand, while the docs content,
+    support address (support@h1.co) and signup flow have been rebranded to H1. H1 also acquired Veda.
+  sources:
+  - https://h1.co/press/h1-acquires-veda-to-solve-healthcares-provider-data-challenge-and-power-better-care/
+  - https://www.fiercehealthcare.com/health-tech/h1-acquires-ribbon-health-expand-its-reach-health-plan-digital-health-markets

@@ -1,0 +1,290 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/h1-insights-openapi-original.json
+docs: https://ribbon.readme.io/reference/getcustomproviders
+format: vendor-envelope
+rfc9457: false
+note: The H1 (Ribbon Health) API does NOT use RFC 9457 application/problem+json. Every error is a JSON object with
+  a single `error` member carrying `status` (integer HTTP code), `code` (a stable machine-readable string) and `message`
+  (human-readable text). Derived from the 4xx responses in the published OpenAPI plus the live 401 returned by the
+  unauthenticated API root.
+envelope:
+  shape:
+    error:
+      status: integer
+      code: string
+      message: string
+  example_observed:
+    error:
+      status: 401
+      code: not_authenticated
+      message: You did not provide an API Key. If you need help, please feel free to contact us at team@ribbonhealth.com!
+  example_source: https://api.ribbonhealth.com/v1/ (unauthenticated GET, observed 2026-08-04)
+codes:
+- not_authenticated
+- bad_request
+- invalid_query_params
+- permission_denied
+- not_found
+- conflict
+problems:
+- status: 401
+  code: not_authenticated
+  title: API key missing or invalid
+  envelope: error.status / error.code / error.message
+  media_type: application/json
+  occurrences: 0
+  remediation: 'Send Authorization: Bearer {customer_token}. Request a key via https://h1.com/request-demo/.'
+  source: probed https://api.ribbonhealth.com/v1/ 2026-08-04 (not declared in the OpenAPI)
+  documented_variants: []
+- status: 400
+  code: bad_request
+  title: Bad request
+  envelope: error.status / error.code / error.message
+  media_type: application/json
+  occurrences: 37
+  remediation: 'Correct the request: check required parameters, allowed parameter combinations, value types and
+    UUID formats. Only one search dimension may be used per request on the reference endpoints.'
+  documented_variants:
+  - description: The search could not be completed as requested
+    operations:
+    - getCustomLocations
+    - getCustomProviders
+    - getCustomVirtualCarePlatforms
+  - description: This request attempted to update fields which cannot be customized or attempted to set a provider_type
+      value which does not exist.
+    operations:
+    - putCustomProvider
+  - description: This request attempted to use fields which are not supported.
+    operations:
+    - putCustomProviderLocation
+    - putCustomProviderLocations
+    - putCustomProviderPrimarySpecialties
+  - description: This request attempted to use fields which are not supported or use items that are not valid UUIDs.
+    operations:
+    - putCustomProviderClinicalAreas
+    - putCustomProviderLocationInsurances
+    - putCustomProviderLocationOrganizations
+    - putCustomProviderProcedures
+    - putCustomProviderSpecialties
+  - description: The filter you attempted to create was malformed
+    operations:
+    - createCustomLocationFilter
+    - createCustomProviderFilter
+  - description: The filter updates you are trying to make are invalid or malformed.
+    operations:
+    - editCustomLocationFilter
+    - editCustomProviderFilter
+  - description: This request attempted to update with invalid schema or was missing required fields.
+    operations:
+    - postCustomInsurance
+    - postCustomLocations
+    - postCustomSpecialty
+    - putCustomInsurance
+    - putCustomLocationType
+    - putCustomProviderType
+  - description: This request attempted to update fields which cannot be customized or attempted to set a location_type
+      value which does not exist.
+    operations:
+    - putCustomLocation
+  - description: This request attempted to use fields which are not supported, or attempted to use invalid value
+      type.
+    operations:
+    - putCustomLocationClinicalAreas
+    - putCustomLocationInsurances
+    - putCustomLocationOrganizations
+  - description: A failure due to a malformed request
+    operations:
+    - getInsurances
+  - description: Each request can only perform one search
+    operations:
+    - getClinicalAreas
+  - description: Module does not exist
+    operations:
+    - getConditions
+  - description: This request attempted to create with invalid schema or was missing required fields.
+    operations:
+    - postCustomLocationType
+    - postCustomProviderType
+  - description: The given search was not valid. It combined parameters that may not be combined, or did not specify
+      a procedure in any way, or the specified procedure could not be found, etc.
+    operations:
+    - getPricingProviders
+  - description: The given search was not valid. The given insurance could not be found, etc.
+    operations:
+    - getPricingProviderProcedure
+    - getPricingProviderProcedureLocation
+    - getPricingProviderProcedures
+  - description: The given request was invalid - the required parameters were missing or invalid, or it specified
+      too many SSA codes.
+    operations:
+    - getNetworkAnalysis
+- status: 403
+  code: permission_denied
+  title: Permission denied
+  envelope: error.status / error.code / error.message
+  media_type: application/json
+  occurrences: 18
+  remediation: The authenticated account is not entitled to this resource. Trial accounts have no access to custom
+    directories, and H1-managed reference resources cannot be modified or deleted. Contact H1 to upgrade the package.
+  documented_variants:
+  - description: Trial accounts do not have access to custom provider directories
+    operations:
+    - getCustomProvider
+    - getCustomProviders
+    - putCustomProvider
+    - putCustomProviderClinicalAreas
+    - putCustomProviderLocation
+    - putCustomProviderLocationInsurances
+  - description: Account does not have access to custom locations directory
+    operations:
+    - getCustomLocations
+  - description: Trial accounts do not have access to custom specialties
+    operations:
+    - getSpecialties
+  - description: Trial accounts do not have access to custom tins
+    operations:
+    - getTins
+  - description: This resource is managed by Ribbon and cannot be modified.
+    operations:
+    - putCustomLocationType
+    - putCustomProviderType
+  - description: This resource is managed by Ribbon and cannot be deleted.
+    operations:
+    - deleteCustomLocationType
+    - deleteCustomProviderType
+- status: 404
+  code: not_found
+  title: Resource not found
+  envelope: error.status / error.code / error.message
+  media_type: application/json
+  occurrences: 45
+  remediation: Verify the NPI, UUID, filter, carrier or insurance-partner identifier exists and belongs to the calling
+    account.
+  documented_variants:
+  - description: The given NPI cannot be found
+    operations:
+    - getCustomProvider
+    - getPricingProviderProcedure
+    - getPricingProviderProcedureLocation
+    - getPricingProviderProcedures
+    - putCustomProvider
+    - putCustomProviderClinicalAreas
+  - description: The given NPI or location cannot be found
+    operations:
+    - putCustomProviderLocation
+  - description: The given NPI or specialty cannot be found
+    operations:
+    - putCustomProviderPrimarySpecialties
+  - description: The given NPI or location UUID cannot be found
+    operations:
+    - putCustomProviderLocationInsurances
+    - putCustomProviderLocationOrganizations
+  - description: The given filter UUID cannot be found.
+    operations:
+    - editCustomLocationFilter
+    - editCustomProviderFilter
+  - description: The given filter UUID cannot be found
+    operations:
+    - deleteCustomLocationFilter
+    - deleteCustomProviderFilter
+  - description: The given location UUID cannot be found
+    operations:
+    - deleteCustomLocation
+    - getCustomLocation
+    - putCustomLocation
+  - description: The given location UUID cannot be found, or NPI in request path is not in custom provider directory.
+    operations:
+    - putCustomLocationClinicalAreas
+    - putCustomLocationInsurances
+    - putCustomLocationOrganizations
+  - description: The given insurance UUID cannot be found
+    operations:
+    - deleteCustomInsurance
+    - getCustomInsurance
+    - putCustomInsurance
+  - description: The given specialty UUID cannot be found
+    operations:
+    - deleteCustomSpecialty
+    - getCustomSpecialty
+    - putCustomSpecialty
+  - description: The given clinical area UUID cannot be found
+    operations:
+    - getClinicalArea
+  - description: The given condition UUID cannot be found
+    operations:
+    - getCondition
+  - description: The given treatment UUID cannot be found
+    operations:
+    - getTreatment
+  - description: The given UUID cannot be found
+    operations:
+    - getOrganization
+    - getVirtualCarePlatform
+  - description: The given TIN UUID cannot be found
+    operations:
+    - getCustomTin
+  - description: The given provider type UUID cannot be found
+    operations:
+    - deleteCustomProviderType
+    - getCustomProviderType
+  - description: The given provider type UUID cannot be found.
+    operations:
+    - putCustomProviderType
+  - description: The given location type UUID cannot be found
+    operations:
+    - deleteCustomLocationType
+    - getCustomLocationType
+  - description: The given location type UUID cannot be found.
+    operations:
+    - putCustomLocationType
+  - description: The given procedure UUID cannot be found
+    operations:
+    - getProcedure
+  - description: The given carrier cannot be found
+    operations:
+    - getPricingCarrier
+    - getPricingVersionCarrier
+  - description: The given insurance partner identifier cannot be found
+    operations:
+    - getEligibilityInsurancePartner
+- status: 409
+  code: conflict
+  title: Conflict — resource already exists
+  envelope: error.status / error.code / error.message
+  media_type: application/json
+  occurrences: 13
+  remediation: A resource with the same unique fields already exists. Fetch and update the existing resource instead
+    of creating a duplicate.
+  documented_variants:
+  - description: A filter with the given `parameter` name already exists
+    operations:
+    - createCustomLocationFilter
+    - createCustomProviderFilter
+  - description: A filter with the given parameter already exists.
+    operations:
+    - editCustomLocationFilter
+    - editCustomProviderFilter
+  - description: A location with this `address` and `name` pair already exists.
+    operations:
+    - postCustomLocations
+  - description: Insurance object with given fields already exists.
+    operations:
+    - postCustomInsurance
+    - putCustomInsurance
+  - description: Specialty object with given fields already exists.
+    operations:
+    - postCustomSpecialty
+    - putCustomSpecialty
+  - description: Provider type object with given display_name already exists.
+    operations:
+    - postCustomProviderType
+  - description: Provider Type object with given display_name already exists.
+    operations:
+    - putCustomProviderType
+  - description: Location type object with given display_name already exists.
+    operations:
+    - postCustomLocationType
+  - description: Location Type object with given display_name already exists.
+    operations:
+    - putCustomLocationType

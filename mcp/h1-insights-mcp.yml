@@ -1,0 +1,46 @@
+generated: '2026-08-04'
+method: searched
+source: https://ribbon.readme.io/mcp
+status: published
+gated: true
+
+server:
+  name: h1-api-docs
+  transport: http
+  url: https://ribbon.readme.io/mcp
+  hosted_by: ReadMe (the platform that hosts H1's developer documentation)
+  first_party: false
+  note: >-
+    An MCP endpoint is live on H1's own documentation host and is the only MCP surface H1 exposes. It is
+    provisioned by the ReadMe documentation platform rather than authored by H1, and it fronts the
+    documentation + API reference, not the API host directly. There is no MCP server on the API host:
+    api.ribbonhealth.com/mcp returns 404, and mcp.h1.com, mcp.h1.co and mcp.ribbonhealth.com do not
+    resolve.
+
+probe:
+  fetched: '2026-08-04'
+  method_get:
+    url: https://ribbon.readme.io/mcp
+    http_status: 200
+    body: 'This URL can only be accessed with a MCP client.'
+  method_post_tools_list:
+    request: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    accept: application/json, text/event-stream
+    http_status: 401
+    body: '{"jsonrpc":"2.0","error":{"code":-32001,"message":"Authorization required"},"id":null}'
+  oauth_discovery:
+    '/.well-known/oauth-authorization-server': 404
+    '/.well-known/oauth-protected-resource': 404
+  conclusion: >-
+    The live tool list and per-tool inputSchema are auth-gated and cannot be enumerated anonymously, and
+    the server publishes no OAuth discovery documents. The tool set below is therefore NOT recorded as the
+    server's actual manifest — it is a derived candidate mapping of the REST surface, kept in
+    mcp/h1-insights-tool-crosswalk.yml. No tool names are asserted here.
+
+tools: []
+tools_note: >-
+  Deliberately empty. tools/list returned 401, so no real tool names or input schemas were observed. See
+  mcp/h1-insights-tool-crosswalk.yml for the derived REST-operation-to-candidate-tool mapping, which is
+  marked as derived and unconfirmed rather than presented as H1's published tool set.
+
+crosswalk: mcp/h1-insights-tool-crosswalk.yml

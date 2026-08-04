@@ -1,0 +1,263 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/h1-insights-openapi-original.json
+docs: https://ribbon.readme.io/docs/ribbon-directory
+note: The published OpenAPI declares no components.schemas — every request/response schema is inlined. This entity
+  graph is therefore derived from path structure, path-parameter identifiers and the sub-resource PUT endpoints,
+  not from $ref links.
+identifiers:
+  provider: NPI (10-digit CMS National Provider Identifier) — the join key across the whole model
+  everything_else: H1/Ribbon-issued UUIDs
+entities:
+- name: provider
+  key: npi
+  key_format: 10-digit National Provider Identifier (NPI)
+  collection: /custom/providers
+  operations:
+  - getCustomProviders
+  - getCustomProvider
+  - putCustomProvider
+- name: location
+  key: location_uuid
+  key_format: uuid
+  collection: /custom/locations
+  operations:
+  - getCustomLocations
+  - getCustomLocation
+  - postCustomLocations
+  - putCustomLocation
+  - deleteCustomLocation
+- name: insurance
+  key: insurance_uuid
+  key_format: uuid
+  collection: /custom/insurances
+  operations:
+  - getInsurances
+  - getCustomInsurance
+  - postCustomInsurance
+  - putCustomInsurance
+  - deleteCustomInsurance
+- name: specialty
+  key: specialty_uuid
+  key_format: uuid
+  collection: /custom/specialties
+  operations:
+  - getSpecialties
+  - getCustomSpecialty
+  - postCustomSpecialty
+  - putCustomSpecialty
+  - deleteCustomSpecialty
+- name: provider_type
+  key: provider_type_uuid
+  key_format: uuid
+  collection: /custom/provider_types
+  operations:
+  - getCustomProviderTypes
+  - getCustomProviderType
+  - postCustomProviderType
+  - putCustomProviderType
+  - deleteCustomProviderType
+- name: location_type
+  key: location_type_uuid
+  key_format: uuid
+  collection: /custom/location_types
+  operations:
+  - getCustomLocationTypes
+  - getCustomLocationType
+  - postCustomLocationType
+  - putCustomLocationType
+  - deleteCustomLocationType
+- name: procedure
+  key: procedure_uuid
+  key_format: uuid
+  collection: /procedures
+  operations:
+  - getProcedures
+  - getProcedure
+- name: clinical_area
+  key: clinical_area_uuid
+  key_format: uuid
+  collection: /custom/clinical_areas
+  operations:
+  - getClinicalAreas
+  - getClinicalArea
+- name: condition
+  key: condition_uuid
+  key_format: uuid
+  collection: /custom/conditions
+  operations:
+  - getConditions
+  - getCondition
+- name: treatment
+  key: treatment_uuid
+  key_format: uuid
+  collection: /custom/treatments
+  operations:
+  - getTreatments
+  - getTreatment
+- name: organization
+  key: organization_uuid
+  key_format: uuid
+  collection: /custom/organizations
+  operations:
+  - getOrganizations
+  - getOrganization
+- name: tin
+  key: tin_id
+  key_format: uuid
+  collection: /custom/tin
+  operations:
+  - getTins
+  - getCustomTin
+- name: virtual_care_platform
+  key: virtual_care_platform_uuid
+  key_format: uuid
+  collection: /custom/virtual_care_platforms
+  operations:
+  - getCustomVirtualCarePlatforms
+  - getVirtualCarePlatform
+- name: provider_filter
+  key: filter_uuid
+  key_format: uuid
+  collection: /custom/providers/filters
+  operations:
+  - getCustomProviderFilters
+  - createCustomProviderFilter
+  - editCustomProviderFilter
+  - deleteCustomProviderFilter
+- name: location_filter
+  key: filter_uuid
+  key_format: uuid
+  collection: /custom/locations/filters
+  operations:
+  - getCustomLocationFilters
+  - createCustomLocationFilter
+  - editCustomLocationFilter
+  - deleteCustomLocationFilter
+- name: language
+  key: null
+  key_format: null
+  collection: /languages
+  operations:
+  - getLanguages
+- name: carrier
+  key: carrier_uuid
+  key_format: uuid
+  collection: /pricing/carriers
+  operations:
+  - getPricingCarriers
+  - getPricingCarrier
+- name: eligibility_insurance_partner
+  key: insurance_partner
+  key_format: string identifier
+  collection: /eligibility_insurance_partners
+  operations:
+  - getEligibilityInsurancePartners
+  - getEligibilityInsurancePartner
+relationships:
+- from: provider
+  to: location
+  type: has_many
+  via: locations
+  evidence: PUT /custom/providers/{npi}/locations (putCustomProviderLocations)
+- from: provider
+  to: specialty
+  type: has_many
+  via: specialties
+  evidence: PUT /custom/providers/{npi}/specialties (putCustomProviderSpecialties)
+- from: provider
+  to: procedure
+  type: has_many
+  via: procedures
+  evidence: PUT /custom/providers/{npi}/procedures (putCustomProviderProcedures)
+- from: provider
+  to: clinical_area
+  type: has_many
+  via: clinical_areas
+  evidence: PUT /custom/providers/{npi}/clinical_areas (putCustomProviderClinicalAreas)
+- from: provider
+  to: provider_type
+  type: belongs_to
+  via: provider_types
+  evidence: provider_types search parameter on getCustomProviders
+- from: provider_location
+  to: insurance
+  type: has_many
+  via: insurances
+  evidence: PUT /custom/providers/{npi}/locations/{location_uuid}/insurances (putCustomProviderLocationInsurances)
+    — insurance participation is scoped to the provider AT a location, not to the provider globally
+- from: provider_location
+  to: organization
+  type: has_many
+  via: organizations
+  evidence: PUT /custom/providers/{npi}/locations/{location_uuid}/organizations (putCustomProviderLocationOrganizations)
+- from: location
+  to: insurance
+  type: has_many
+  via: insurances
+  evidence: PUT /custom/locations/{location_uuid}/insurances (putCustomLocationInsurances)
+- from: location
+  to: organization
+  type: has_many
+  via: organizations
+  evidence: PUT /custom/locations/{location_uuid}/organizations (putCustomLocationOrganizations)
+- from: location
+  to: clinical_area
+  type: has_many
+  via: clinical_areas
+  evidence: PUT /custom/locations/{location_uuid}/clinical_areas (putCustomLocationClinicalAreas)
+- from: location
+  to: location_type
+  type: belongs_to
+  via: location_type
+  evidence: 'putCustomLocation 400 response: "attempted to set a location_type value which does not exist"'
+- from: clinical_area
+  to: condition
+  type: has_many
+  via: conditions
+  evidence: Focus Area Endpoints group clinical_areas, conditions and treatments
+- from: clinical_area
+  to: treatment
+  type: has_many
+  via: treatments
+  evidence: Focus Area Endpoints group clinical_areas, conditions and treatments
+- from: provider
+  to: procedure_price
+  type: has_many
+  via: pricing
+  evidence: GET /pricing/providers/{npi}/procedures (getPricingProviderProcedures)
+- from: procedure_price
+  to: location
+  type: belongs_to
+  via: location_uuid
+  evidence: GET /pricing/providers/{npi}/procedures/{procedure_uuid}/locations/{location_uuid} (getPricingProviderProcedureLocation)
+- from: procedure_price
+  to: carrier
+  type: belongs_to
+  via: carrier
+  evidence: GET /pricing/carrier/{carrier_uuid} (getPricingCarrier) documents the carrier whose negotiated rates
+    are used
+- from: provider_filter
+  to: provider
+  type: has_many
+  via: custom search parameter
+  evidence: createCustomProviderFilter creates a parameter usable on getCustomProviders
+- from: location_filter
+  to: location
+  type: has_many
+  via: custom search parameter
+  evidence: createCustomLocationFilter creates a parameter usable on getCustomLocations
+- from: eligibility_check
+  to: eligibility_insurance_partner
+  type: belongs_to
+  via: insurance_partner
+  evidence: POST /eligibility (getEligibility) against a partner from getEligibilityInsurancePartners
+- from: provider
+  to: tin
+  type: has_many
+  via: tins
+  evidence: GET /custom/tin (getTins) — Tax Identification Numbers associated with providers/organizations
+coverage:
+  entities: 18
+  relationships: 20
+  operations: 75

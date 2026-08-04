@@ -1,0 +1,112 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the H1 Provider Data API
+  version: 1.0.0
+extends: openapi/h1-insights-openapi-original.json
+x-generated: '2026-08-04'
+x-method: generated
+x-source: >-
+  API Evangelist enrichment pass 2026-08-04. Captures our annotations over the spec harvested verbatim
+  from https://dash.readme.com/api/v1/api-registry/hmjy16mehhk4kq (the ReadMe API registry behind
+  ribbon.readme.io). The original is never mutated.
+actions:
+
+- target: $.info
+  description: >-
+    Record the operator identity. The spec still carries the acquired brand ("Ribbon Health API") while the
+    product, docs and support are branded H1.
+  update:
+    x-apievangelist-provider: H1
+    x-apievangelist-slug: h1-insights
+    x-apievangelist-product: H1 Provider Data API
+    x-apievangelist-legacy-brand: Ribbon Health API
+    x-apievangelist-docs: https://ribbon.readme.io/
+    x-apievangelist-harvested: '2026-08-04'
+    x-apievangelist-spec-source: https://dash.readme.com/api/v1/api-registry/hmjy16mehhk4kq
+
+- target: $.info
+  description: >-
+    Attach the artifacts derived from this spec so an agent reading the contract can reach the semantics
+    that are not in it.
+  update:
+    x-apievangelist-artifacts:
+      conventions: conventions/h1-insights-conventions.yml
+      errors: errors/h1-insights-problem-types.yml
+      authentication: authentication/h1-insights-authentication.yml
+      lifecycle: lifecycle/h1-insights-lifecycle.yml
+      data-model: data-model/h1-insights-data-model.yml
+      conformance: conformance/h1-insights-conformance.yml
+      skills: skills/_index.yml
+      crosswalk: mcp/h1-insights-tool-crosswalk.yml
+
+- target: $.info
+  description: >-
+    Record the gaps we observed against the original contract, so they are legible without re-deriving
+    them. These are observations about the published spec, not changes to it.
+  update:
+    x-apievangelist-observations:
+      components_schemas: 0
+      schema_reuse: >-
+        No components.schemas at all — every request and response body is inlined, and shared error
+        shapes are referenced with JSON Pointers into other operations' response bodies
+        (e.g. #/paths/~1network_analysis/get/responses/400/...). Valid OpenAPI, but it makes the spec
+        near-impossible to codegen cleanly and is the main reason no SDK exists.
+      response_examples: 0
+      error_format: 'vendor envelope {error:{status,code,message}} — not RFC 9457'
+      undocumented_status_codes: ['401 not_authenticated (returned live by the API root, absent from the spec)']
+      rate_limit_responses: 'none — no 429 declared on any of the 75 operations'
+      security: 'single global http bearer scheme; no scopes, no per-operation security overrides'
+      operations_with_summary: 75
+      operations_with_description: 75
+      deprecated_operations: 2
+
+- target: $.servers
+  description: Confirm the production base URL observed live (401 not_authenticated on an unauthenticated call).
+  update:
+    x-apievangelist-verified: '2026-08-04'
+    x-apievangelist-verified-status: 401
+
+- target: $.paths['/custom/providers'].get
+  description: >-
+    Annotate the primary search operation with the pagination coupling that is documented in prose but not
+    expressible as an OpenAPI constraint.
+  update:
+    x-apievangelist-pagination:
+      style: page-number
+      params: [page, page_size, max_locations]
+      constraint: 'max_locations * page_size <= 1000'
+      page_size_cap: 200
+      default_page_size: 25
+    x-apievangelist-sparse-fieldsets:
+      include: fields
+      exclude: _excl_fields
+      mutually_exclusive: true
+
+- target: $.paths['/pricing/version'].get
+  description: Make the deprecation replacement machine-readable rather than prose-only.
+  update:
+    x-apievangelist-deprecation:
+      deprecated: true
+      replacement_operation_id: getPricingCarriers
+      replacement_path: /pricing/carriers
+      sunset_date: null
+      sunset_header: false
+
+- target: $.paths['/pricing/version/{carrier_name}'].get
+  description: Make the deprecation replacement machine-readable rather than prose-only.
+  update:
+    x-apievangelist-deprecation:
+      deprecated: true
+      replacement_operation_id: getPricingCarrier
+      replacement_path: /pricing/carrier/{carrier_uuid}
+      sunset_date: null
+      sunset_header: false
+
+- target: $.paths['/eligibility'].post
+  description: >-
+    Flag the one operation on the surface that handles member coverage data (PHI under HIPAA) and is
+    fulfilled through a named third party.
+  update:
+    x-apievangelist-data-sensitivity: phi
+    x-apievangelist-subprocessor: pVerify (named as the eligibility provider on status.ribbonhealth.com)
+    x-apievangelist-standard-equivalent: X12 270/271 real-time eligibility, exposed as JSON

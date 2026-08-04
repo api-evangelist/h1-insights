@@ -1,18 +1,74 @@
 aid: h1-insights
 name: H1
-description: 'H1 is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  H1 is a healthcare data and intelligence company that builds a unified view of the world's healthcare
+  providers — physicians, care locations, organizations, insurance networks, specialties, clinical focus
+  areas, negotiated prices and quality signals — and makes it available to pharmaceutical, life-science,
+  health-plan and digital-health customers through applications and a REST API. Following its acquisition
+  of Ribbon Health (announced January 2025) the provider-data platform is delivered as "H1 for Health Plans
+  and Digital Health", and the developer-facing product is the H1 Provider Data API (still served from the
+  api.ribbonhealth.com host and documented at ribbon.readme.io). The API covers provider directory search
+  by geography, insurance network, specialty, procedure and quality measure; location and organization
+  search; reference data for insurances, specialties, provider types, location types, procedures,
+  languages, conditions and treatments; customer-specific custom directories, custom fields and
+  boost/custom ranking filters; price-transparency search over negotiated rates; procedure cost estimates;
+  and real-time member eligibility and benefits checks. H1 states it serves 200+ customers across six
+  continents, including a majority of the top-20 pharmaceutical companies and most major US health plans.
+image: https://h1.com/wp-content/uploads/2022/10/Open-Graph-v2-1200x630.png
 url: https://raw.githubusercontent.com/api-evangelist/h1-insights/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-04'
 modified: '2026-08-04'
 tags:
-- Company
-apis: []
+- healthcare
+- provider-data
+- provider-directory
+- health-insurance
+- price-transparency
+- eligibility
+- care-navigation
+- health-plans
+- digital-health
+- life-sciences
+- clinical-trials
+- reference-data
+apis:
+- name: H1 Provider Data API
+  description: >-
+    REST API (formerly the Ribbon Health API) for searching and enriching United States healthcare
+    provider, location and organization data — including insurance network participation, specialties,
+    clinical focus areas, confidence scores, cost/quality measures, negotiated price transparency,
+    procedure cost estimates and real-time member eligibility. Bearer-token authenticated, JSON over
+    HTTPS, versioned in the URI path (/v1), with customer-scoped "custom" directories that can be edited
+    and extended with custom fields and search filters.
+  humanURL: https://ribbon.readme.io/
+  baseURL: https://api.ribbonhealth.com/v1
+  tags:
+  - healthcare
+  - provider-data
+  - provider-directory
+  - health-insurance
+  - price-transparency
+  - eligibility
+  - care-navigation
+  - reference-data
+  properties:
+  - type: OpenAPI
+    url: openapi/h1-insights-openapi-original.json
+  - type: Documentation
+    url: https://ribbon.readme.io/
+  - type: APIReference
+    url: https://ribbon.readme.io/reference/getcustomproviders
+  - type: GettingStarted
+    url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
+  - type: Authentication
+    url: https://ribbon.readme.io/docs/authentication
+  - type: Overlay
+    url: overlays/h1-insights-openapi-overlay.yaml
+  - type: ToolCrosswalk
+    url: mcp/h1-insights-tool-crosswalk.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +76,65 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://forgeglobal.com/h1-insights_stock/
+  url: https://h1.com/
+- type: DeveloperPortal
+  url: https://ribbon.readme.io/
+- type: Documentation
+  url: https://ribbon.readme.io/
+- type: APIReference
+  url: https://ribbon.readme.io/reference/getcustomproviders
+- type: GettingStarted
+  url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
+- type: Support
+  url: https://h1.com/company/contact-us/
+- type: HelpCenter
+  url: https://support.h1.co/hc/en-us
+- type: Blog
+  url: https://h1.com/blog/
+- type: GitHubOrganization
+  url: https://github.com/h1insights
+- type: SignUp
+  url: https://h1.com/request-demo/
+- type: Login
+  url: https://app.h1insights.com/login
+- type: TermsOfService
+  url: https://h1.com/terms-of-use/
+- type: PrivacyPolicy
+  url: https://h1.com/privacy-policy/
+- type: StatusPage
+  url: https://status.ribbonhealth.com/
+- type: Lifecycle
+  url: lifecycle/h1-insights-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/h1-insights-lifecycle.yml
+- type: Authentication
+  url: authentication/h1-insights-authentication.yml
+- type: Conventions
+  url: conventions/h1-insights-conventions.yml
+- type: ErrorCatalog
+  url: errors/h1-insights-problem-types.yml
+- type: Conformance
+  url: conformance/h1-insights-conformance.yml
+- type: DataModel
+  url: data-model/h1-insights-data-model.yml
+- type: DomainSecurity
+  url: security/h1-insights-domain-security.yml
+- type: WellKnown
+  url: well-known/h1-insights-well-known.yml
+- type: Packages
+  url: packages/h1-insights-packages.yml
+- type: MCPServer
+  url: mcp/h1-insights-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/h1-insights-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/h1-insights-llms.txt
+- type: Overlay
+  url: overlays/h1-insights-openapi-overlay.yaml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-04'
+  status: enriched
+  artifacts_added: 13
+  pass: local-v1

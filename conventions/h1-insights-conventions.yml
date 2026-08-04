@@ -1,0 +1,156 @@
+generated: '2026-08-04'
+method: searched
+source: https://ribbon.readme.io/
+derived_from: openapi/h1-insights-openapi-original.json
+docs:
+- https://ribbon.readme.io/docs/authentication
+- https://ribbon.readme.io/docs/includeexclude-fields
+- https://ribbon.readme.io/docs/latency
+- https://ribbon.readme.io/docs/confidence-scores
+
+api: H1 Provider Data API
+base_url: https://api.ribbonhealth.com/v1
+
+authentication:
+  style: bearer-token
+  header: 'Authorization: Bearer {customer_token}'
+  scheme: http bearer (OpenAPI securityScheme "BearerAuth", applied globally)
+  oauth2: false
+  scopes: false
+  note: >-
+    Entitlement is per-account, not per-scope. Package level (Base API Access vs Upgraded API vs Add-Ons)
+    determines which endpoints answer; an out-of-package call returns 403 permission_denied rather than a
+    scope error. Trial accounts are explicitly excluded from custom provider directories, custom
+    specialties and custom TINs.
+  docs: https://ribbon.readme.io/docs/authentication
+  artifact: authentication/h1-insights-authentication.yml
+
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No Idempotency-Key header or equivalent is documented or present in the OpenAPI. Write operations are
+    PUT/DELETE against addressable resources (naturally idempotent by HTTP method), but POST creation
+    endpoints (postCustomLocations, postCustomInsurance, postCustomSpecialty, postCustomProviderType,
+    postCustomLocationType, createCustomProviderFilter, createCustomLocationFilter) have no client-supplied
+    idempotency token. Duplicate creates are rejected with 409 conflict on the natural key instead
+    (e.g. a location's address+name pair, a filter's parameter name, a type's display_name), which is a
+    server-side uniqueness guard, not an idempotency contract.
+
+pagination:
+  style: page-number
+  parameters:
+  - name: page
+    description: The page of results to return.
+    default: 1
+  - name: page_size
+    description: >-
+      Results per page. Generally capped at 200, subject to the hard constraint
+      max_locations * page_size <= 1000.
+    default: 25
+  - name: max_locations
+    description: >-
+      Maximum number of locations attached to any returned provider. Bound by
+      max_locations * page_size <= 1000.
+    default: 5
+  constraint: 'max_locations * page_size <= 1000'
+  cursor: false
+  source: openapi/h1-insights-openapi-original.json (query object "Pagination and Search Configuration Options")
+
+sparse_fieldsets:
+  supported: true
+  include_param: fields
+  exclude_param: _excl_fields
+  format: comma-separated list of top-level fields on the returned object
+  mutually_exclusive: true
+  example_include: 'https://api.ribbonhealth.com/v1/custom/providers?specialty=Dermatology&address=10014&fields=locations'
+  example_exclude: 'https://api.ribbonhealth.com/v1/custom/providers?specialty=Dermatology&address=10014&_excl_fields=locations'
+  rationale: >-
+    Provider objects can carry tens of thousands of rows across `locations` and `insurances`; the docs
+    present field filtering as the primary latency and payload-size control.
+  docs: https://ribbon.readme.io/docs/includeexclude-fields
+
+exclusion_convention:
+  pattern: '_excl_<dimension>'
+  note: >-
+    A repeated convention across the search surface — every positive filter has a negative twin prefixed
+    with `_excl_` (for example provider_types / _excl_provider_types, fields / _excl_fields).
+
+async_writes:
+  supported: true
+  parameter: async
+  values: ['true']
+  applies_to: edit/write operations on custom directories
+  note: 'Documented under Latency as a recommended optimization: "When editing, applying the async=true, which will apply edits asynchronously".'
+  docs: https://ribbon.readme.io/docs/latency
+
+expansion:
+  supported: false
+  note: >-
+    No expand/include parameter. Related data (locations, insurances, specialties) is embedded in the
+    provider/location object by default and is narrowed with `fields`/`_excl_fields` rather than widened
+    with an expansion parameter.
+
+metadata:
+  custom_fields: true
+  note: >-
+    Customers on the Upgraded API package can add arbitrary custom fields to providers and locations
+    (putCustomProvider, putCustomLocation) and then make them searchable by registering a custom filter
+    (createCustomProviderFilter / createCustomLocationFilter). Boost filters re-rank rather than restrict.
+  docs:
+  - https://ribbon.readme.io/docs/create-a-custom-filter
+  - https://ribbon.readme.io/docs/create-a-boost-filter
+  - https://ribbon.readme.io/docs/using-weighted-custom-filters
+
+request_tracing:
+  request_id_header: null
+  note: No request-id / correlation-id header is documented or declared in the OpenAPI.
+
+versioning:
+  scheme: uri-path
+  current: v1
+  base: https://api.ribbonhealth.com/v1
+  docs_versioning: >-
+    The documentation site is versioned separately (current docs branch 2.2, paths of the form
+    /v2.2/reference/...). Docs version and API path version are not the same number.
+  artifact: lifecycle/h1-insights-lifecycle.yml
+
+error_envelope:
+  media_type: application/json
+  rfc9457: false
+  shape:
+    error:
+      status: integer
+      code: string
+      message: string
+  codes: [not_authenticated, bad_request, invalid_query_params, permission_denied, not_found, conflict]
+  artifact: errors/h1-insights-problem-types.yml
+
+rate_limiting:
+  documented: false
+  headers: null
+  note: >-
+    No rate-limit policy, quota or 429 response is documented in the API docs or declared in the OpenAPI
+    (no 429 appears among the 75 operations). Latency guidance is published instead of throughput limits.
+
+data_quality_signals:
+  confidence_scores:
+    scale: 1-5
+    meaning:
+      '5': manually verified within the past 90 days
+      '4': ~90% probability of accuracy
+      '3': ~70% probability of accuracy
+      '2': ~50% probability of accuracy (stated industry average)
+      '1': ~20% probability of accuracy
+    applies_to: provider contact information (address, phone number)
+    docs: https://ribbon.readme.io/docs/confidence-scores
+    note: >-
+      A first-class response-level trust signal — unusual for a directory API and directly consumable by
+      agents deciding whether to act on a returned address or phone number.
+
+cross_links:
+  errors: errors/h1-insights-problem-types.yml
+  lifecycle: lifecycle/h1-insights-lifecycle.yml
+  authentication: authentication/h1-insights-authentication.yml
+  data_model: data-model/h1-insights-data-model.yml
+  conformance: conformance/h1-insights-conformance.yml

@@ -1,0 +1,103 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/h1-insights-openapi-original.json
+docs: https://ribbon.readme.io/
+note: >-
+  Standards conformance derived from the published OpenAPI plus the public documentation. H1 publishes no
+  compliance/trust page and names no certifications on any public URL probed on 2026-08-04, so no
+  Compliance pointer is asserted.
+
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: 'openapi: 3.1.0 declared; 57 paths, 75 operations, all with summary + description + operationId'
+- id: rest-json
+  conforms: true
+  evidence: All 181 declared response bodies are application/json over HTTPS
+- id: http-bearer-auth
+  conforms: true
+  evidence: 'components.securitySchemes.BearerAuth {type: http, scheme: bearer}, applied globally via root security'
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme, no authorization/token URLs, no scope surface
+- id: openid-connect
+  conforms: false
+  evidence: '/.well-known/openid-configuration returns 404 on h1.com, api.ribbonhealth.com and ribbon.readme.io'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use a vendor envelope {error:{status,code,message}} with media type application/json, not
+    application/problem+json
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation response headers declared; deprecation is signalled only in the spec and prose
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: '/.well-known/security.txt returns 404 on h1.com, www.h1.co, api.ribbonhealth.com and ribbonhealth.com'
+- id: rfc8615-well-known
+  conforms: false
+  evidence: No /.well-known document served on any probed host
+- id: json-api
+  conforms: false
+  evidence: Responses are bespoke JSON objects, not JSON:API documents
+- id: fhir-r4
+  conforms: false
+  evidence: >-
+    No FHIR resource shapes, no /Practitioner, /PractitionerRole, /Organization, /Location or /InsurancePlan
+    endpoints, no application/fhir+json. This is notable — the CMS Interoperability and Patient Access rule
+    (CMS-9115-F) drives payer provider-directory APIs toward the Da Vinci PDEX Plan-Net FHIR profile, and
+    the H1 provider-directory surface is a proprietary REST model instead.
+- id: davinci-pdex-plan-net
+  conforms: false
+  evidence: No FHIR Plan-Net profile surface published
+- id: cms-price-transparency
+  conforms: partial
+  evidence: >-
+    The /pricing/* endpoints (getPricingProviders, getPricingProviderProcedures, getPricingProviderProcedure,
+    getPricingProviderProcedureLocation, getPricingCarriers, getPricingCarrier) expose insurer negotiated
+    rates, the dataset mandated by the CMS Transparency in Coverage rule. H1 acts as an aggregator over
+    carrier machine-readable files rather than publishing the mandated files itself; carrier data recency is
+    exposed via getPricingCarrier. No conformance claim is made by H1.
+- id: x12-270-271-eligibility
+  conforms: partial
+  evidence: >-
+    POST /eligibility (getEligibility) returns member deductible, out-of-pocket, copay and coinsurance —
+    the X12 270/271 real-time eligibility payload — but exposed as JSON via a partner (the status page names
+    pVerify as the eligibility provider), not as X12 EDI. No standard is claimed in the docs.
+- id: npi-nppes
+  conforms: true
+  evidence: >-
+    The CMS National Provider Identifier is the primary key for the provider entity across the API
+    (path parameter {npi}, npis search parameter, documented at
+    https://ribbon.readme.io/docs/npi-national-provider-identifier)
+- id: hipaa
+  conforms: unknown
+  evidence: >-
+    Not asserted on any public page probed. The eligibility surface handles member coverage data, which is
+    PHI under HIPAA, but H1 publishes no HIPAA attestation, BAA reference or trust center. Probed
+    h1.com/trust (404), h1.com/compliance (404), trust.h1.com (no DNS), security.h1.com (no DNS).
+- id: soc2
+  conforms: unknown
+  evidence: Not named on any public H1 page probed on 2026-08-04
+- id: iso-27001
+  conforms: unknown
+  evidence: Not named on any public H1 page probed on 2026-08-04
+- id: gdpr
+  conforms: partial
+  evidence: >-
+    The privacy policy references the EU-US and Swiss-US Privacy Shield Frameworks (and notes H1 no longer
+    relies on them) but names no GDPR-specific program.
+    https://h1.com/privacy-policy/
+- id: pagination-standard
+  conforms: partial
+  evidence: >-
+    Consistent page/page_size number pagination across search endpoints, but no Link headers, no cursor,
+    and a non-obvious max_locations * page_size <= 1000 coupling
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header or equivalent; duplicate POST creates are guarded server-side with 409
+    conflict on natural keys instead
+- id: asyncapi
+  conforms: false
+  evidence: 'N/A — no event, streaming or webhook surface exists; not applicable rather than missing'
