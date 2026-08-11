@@ -35,28 +35,16 @@ tags:
 - clinical-trials
 - reference-data
 apis:
-- name: H1 Provider Data API
-  description: >-
-    REST API (formerly the Ribbon Health API) for searching and enriching United States healthcare
-    provider, location and organization data — including insurance network participation, specialties,
-    clinical focus areas, confidence scores, cost/quality measures, negotiated price transparency,
-    procedure cost estimates and real-time member eligibility. Bearer-token authenticated, JSON over
-    HTTPS, versioned in the URI path (/v1), with customer-scoped "custom" directories that can be edited
-    and extended with custom fields and search filters.
+- aid: h1-insights:h1-insights-cost-estimates-api
+  name: H1 Cost Estimates API
+  description: The Cost Estimates API from H1 — 4 operation(s) for cost estimates.
   humanURL: https://ribbon.readme.io/
   baseURL: https://api.ribbonhealth.com/v1
   tags:
-  - healthcare
-  - provider-data
-  - provider-directory
-  - health-insurance
-  - price-transparency
-  - eligibility
-  - care-navigation
-  - reference-data
+  - Cost Estimates
   properties:
   - type: OpenAPI
-    url: openapi/h1-insights-openapi-original.json
+    url: openapi/h1-insights-cost-estimates-api-openapi.yml
   - type: Documentation
     url: https://ribbon.readme.io/
   - type: APIReference
@@ -65,8 +53,206 @@ apis:
     url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
   - type: Authentication
     url: https://ribbon.readme.io/docs/authentication
-  - type: Overlay
-    url: overlays/h1-insights-openapi-overlay.yaml
+  - type: ToolCrosswalk
+    url: mcp/h1-insights-tool-crosswalk.yml
+- aid: h1-insights:h1-insights-filters-api
+  name: H1 Filters API
+  description: The Filters API from H1 — 4 operation(s) for filters.
+  humanURL: https://ribbon.readme.io/
+  baseURL: https://api.ribbonhealth.com/v1
+  tags:
+  - Filters
+  properties:
+  - type: OpenAPI
+    url: openapi/h1-insights-filters-api-openapi.yml
+  - type: Documentation
+    url: https://ribbon.readme.io/
+  - type: APIReference
+    url: https://ribbon.readme.io/reference/getcustomproviders
+  - type: GettingStarted
+    url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
+  - type: Authentication
+    url: https://ribbon.readme.io/docs/authentication
+  - type: ToolCrosswalk
+    url: mcp/h1-insights-tool-crosswalk.yml
+- aid: h1-insights:h1-insights-focus-area-endpoints-api
+  name: H1 Focus Area Endpoints API
+  description: The Focus Area Endpoints API from H1 — 6 operation(s) for focus area endpoints.
+  humanURL: https://ribbon.readme.io/
+  baseURL: https://api.ribbonhealth.com/v1
+  tags:
+  - Focus Area Endpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/h1-insights-focus-area-endpoints-api-openapi.yml
+  - type: Documentation
+    url: https://ribbon.readme.io/
+  - type: APIReference
+    url: https://ribbon.readme.io/reference/getcustomproviders
+  - type: GettingStarted
+    url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
+  - type: Authentication
+    url: https://ribbon.readme.io/docs/authentication
+  - type: ToolCrosswalk
+    url: mcp/h1-insights-tool-crosswalk.yml
+- aid: h1-insights:h1-insights-locations-api
+  name: H1 Locations API
+  description: The Locations API from H1 — 5 operation(s) for locations.
+  humanURL: https://ribbon.readme.io/
+  baseURL: https://api.ribbonhealth.com/v1
+  tags:
+  - Locations
+  properties:
+  - type: OpenAPI
+    url: openapi/h1-insights-locations-api-openapi.yml
+  - type: Documentation
+    url: https://ribbon.readme.io/
+  - type: APIReference
+    url: https://ribbon.readme.io/reference/getcustomproviders
+  - type: GettingStarted
+    url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
+  - type: Authentication
+    url: https://ribbon.readme.io/docs/authentication
+  - type: ToolCrosswalk
+    url: mcp/h1-insights-tool-crosswalk.yml
+- aid: h1-insights:h1-insights-networks-api
+  name: H1 Networks API
+  description: The Networks API from H1 — 1 operation(s) for networks.
+  humanURL: https://ribbon.readme.io/
+  baseURL: https://api.ribbonhealth.com/v1
+  tags:
+  - Networks
+  properties:
+  - type: OpenAPI
+    url: openapi/h1-insights-networks-api-openapi.yml
+  - type: Documentation
+    url: https://ribbon.readme.io/
+  - type: APIReference
+    url: https://ribbon.readme.io/reference/getcustomproviders
+  - type: GettingStarted
+    url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
+  - type: Authentication
+    url: https://ribbon.readme.io/docs/authentication
+  - type: ToolCrosswalk
+    url: mcp/h1-insights-tool-crosswalk.yml
+- aid: h1-insights:h1-insights-organizations-api
+  name: H1 Organizations API
+  description: The Organizations API from H1 — 2 operation(s) for organizations.
+  humanURL: https://ribbon.readme.io/
+  baseURL: https://api.ribbonhealth.com/v1
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/h1-insights-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://ribbon.readme.io/
+  - type: APIReference
+    url: https://ribbon.readme.io/reference/getcustomproviders
+  - type: GettingStarted
+    url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
+  - type: Authentication
+    url: https://ribbon.readme.io/docs/authentication
+  - type: ToolCrosswalk
+    url: mcp/h1-insights-tool-crosswalk.yml
+- aid: h1-insights:h1-insights-price-transparency-api
+  name: H1 Price Transparency API
+  description: The Price Transparency API from H1 — 8 operation(s) for price transparency.
+  humanURL: https://ribbon.readme.io/
+  baseURL: https://api.ribbonhealth.com/v1
+  tags:
+  - Price Transparency
+  properties:
+  - type: OpenAPI
+    url: openapi/h1-insights-price-transparency-api-openapi.yml
+  - type: Documentation
+    url: https://ribbon.readme.io/
+  - type: APIReference
+    url: https://ribbon.readme.io/reference/getcustomproviders
+  - type: GettingStarted
+    url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
+  - type: Authentication
+    url: https://ribbon.readme.io/docs/authentication
+  - type: ToolCrosswalk
+    url: mcp/h1-insights-tool-crosswalk.yml
+- aid: h1-insights:h1-insights-providers-api
+  name: H1 Providers API
+  description: The Providers API from H1 — 10 operation(s) for providers.
+  humanURL: https://ribbon.readme.io/
+  baseURL: https://api.ribbonhealth.com/v1
+  tags:
+  - Providers
+  properties:
+  - type: OpenAPI
+    url: openapi/h1-insights-providers-api-openapi.yml
+  - type: Documentation
+    url: https://ribbon.readme.io/
+  - type: APIReference
+    url: https://ribbon.readme.io/reference/getcustomproviders
+  - type: GettingStarted
+    url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
+  - type: Authentication
+    url: https://ribbon.readme.io/docs/authentication
+  - type: ToolCrosswalk
+    url: mcp/h1-insights-tool-crosswalk.yml
+- aid: h1-insights:h1-insights-reference-endpoints-api
+  name: H1 Reference Endpoints API
+  description: The Reference Endpoints API from H1 — 13 operation(s) for reference endpoints.
+  humanURL: https://ribbon.readme.io/
+  baseURL: https://api.ribbonhealth.com/v1
+  tags:
+  - Reference Endpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/h1-insights-reference-endpoints-api-openapi.yml
+  - type: Documentation
+    url: https://ribbon.readme.io/
+  - type: APIReference
+    url: https://ribbon.readme.io/reference/getcustomproviders
+  - type: GettingStarted
+    url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
+  - type: Authentication
+    url: https://ribbon.readme.io/docs/authentication
+  - type: ToolCrosswalk
+    url: mcp/h1-insights-tool-crosswalk.yml
+- aid: h1-insights:h1-insights-tins-api
+  name: H1 TI Ns API
+  description: The TINs API from H1 — 2 operation(s) for tins.
+  humanURL: https://ribbon.readme.io/
+  baseURL: https://api.ribbonhealth.com/v1
+  tags:
+  - TINs
+  properties:
+  - type: OpenAPI
+    url: openapi/h1-insights-tins-api-openapi.yml
+  - type: Documentation
+    url: https://ribbon.readme.io/
+  - type: APIReference
+    url: https://ribbon.readme.io/reference/getcustomproviders
+  - type: GettingStarted
+    url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
+  - type: Authentication
+    url: https://ribbon.readme.io/docs/authentication
+  - type: ToolCrosswalk
+    url: mcp/h1-insights-tool-crosswalk.yml
+- aid: h1-insights:h1-insights-virtual-care-platforms-api
+  name: H1 Virtual Care Platforms API
+  description: The Virtual Care Platforms API from H1 — 2 operation(s) for virtual care platforms.
+  humanURL: https://ribbon.readme.io/
+  baseURL: https://api.ribbonhealth.com/v1
+  tags:
+  - Virtual Care Platforms
+  properties:
+  - type: OpenAPI
+    url: openapi/h1-insights-virtual-care-platforms-api-openapi.yml
+  - type: Documentation
+    url: https://ribbon.readme.io/
+  - type: APIReference
+    url: https://ribbon.readme.io/reference/getcustomproviders
+  - type: GettingStarted
+    url: https://ribbon.readme.io/docs/welcome-to-the-ribbon-health-api
+  - type: Authentication
+    url: https://ribbon.readme.io/docs/authentication
   - type: ToolCrosswalk
     url: mcp/h1-insights-tool-crosswalk.yml
 maintainers:
